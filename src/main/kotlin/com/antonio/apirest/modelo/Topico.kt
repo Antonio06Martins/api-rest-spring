@@ -1,13 +1,27 @@
 package com.antonio.apirest.modelo
 
 import java.time.LocalDateTime
+import javax.persistence.*
 
+@Entity
+class Topico(var titulo: String,
+             var mensagem: String,
 
-class Topico(var titulo: String, var mensagem: String, var curso: Curso) {
+             @ManyToOne
+             var curso: Curso) {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     var dataCriacao = LocalDateTime.now()
+
+    @Enumerated(EnumType.STRING)
     var status: StatusTopico = StatusTopico.NAO_RESPONDIDO
+
+    @ManyToOne
     var autor: Usuario? = null
+
+    @ManyToMany(mappedBy = "topico")
     var respostas: List<Resposta> = ArrayList()
 
     override fun hashCode(): Int {

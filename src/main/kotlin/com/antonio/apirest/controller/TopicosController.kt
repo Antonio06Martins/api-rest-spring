@@ -1,16 +1,21 @@
 package com.antonio.apirest.controller
 
-import com.antonio.apirest.modelo.Curso
-import com.antonio.apirest.modelo.Topico
+import com.antonio.apirest.repository.TopicoRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+
 
 @RestController
 class TopicosController {
 
+    @Autowired
+    private val topicoRepository: TopicoRepository? = null
+
     @RequestMapping("/topicos")
     fun lista(): List<TopicoDto?>? {
-        val topico = Topico("Duvida", "Duvida com Spring", Curso("Spring", "Programação"))
-        return TopicoDto().converter(arrayListOf(topico, topico, topico))
+        val topicos = topicoRepository!!.findAll()
+        return TopicoDto.converter(topicos)
     }
 }
+

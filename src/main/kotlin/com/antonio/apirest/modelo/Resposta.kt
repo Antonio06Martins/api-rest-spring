@@ -1,13 +1,21 @@
 package com.antonio.apirest.modelo
 
 import java.time.LocalDateTime
+import javax.persistence.*
 
-
+@Entity
 class Resposta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     var mensagem: String? = null
+
+    @ManyToOne
     var topico: Topico? = null
     var dataCriacao = LocalDateTime.now()
+
+    @ManyToOne
     var autor: Usuario? = null
     var solucao = false
 

@@ -1,6 +1,15 @@
 package com.antonio.apirest.modelo
 
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+
+@Entity
 class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     var nome: String? = null
     var email: String? = null
@@ -13,11 +22,11 @@ class Usuario {
         return result
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (this === obj) return true
-        if (obj == null) return false
-        if (javaClass != obj.javaClass) return false
-        val other = obj as Usuario
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null) return false
+        if (javaClass != other.javaClass) return false
+        val other = other as Usuario
         if (id == null) {
             if (other.id != null) return false
         } else if (id != other.id) return false
