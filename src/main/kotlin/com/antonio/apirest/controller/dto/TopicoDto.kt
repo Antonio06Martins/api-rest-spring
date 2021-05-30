@@ -1,4 +1,4 @@
-package com.antonio.apirest.controller
+package com.antonio.apirest.controller.dto
 
 import com.antonio.apirest.modelo.Topico
 import java.time.LocalDateTime
@@ -23,8 +23,8 @@ class TopicoDto(topico: Topico) {
 
     init {
         id = topico.id
-        titulo = topico.titulo
-        mensagem = topico.mensagem
+        titulo = topico.titulo.toString()
+        mensagem = topico.mensagem.toString()
         dataCriacao = topico.dataCriacao
     }
 }

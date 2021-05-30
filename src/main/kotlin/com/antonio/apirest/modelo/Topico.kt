@@ -4,25 +4,32 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Topico(var titulo: String,
-             var mensagem: String,
-
-             @ManyToOne
-             var curso: Curso) {
-
+class Topico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+    var titulo: String? = null
+    var mensagem: String? = null
     var dataCriacao = LocalDateTime.now()
 
     @Enumerated(EnumType.STRING)
-    var status: StatusTopico = StatusTopico.NAO_RESPONDIDO
+    var status = StatusTopico.NAO_RESPONDIDO
 
     @ManyToOne
     var autor: Usuario? = null
 
-    @ManyToMany(mappedBy = "topico")
+    @ManyToOne
+    var curso: Curso? = null
+
+    @OneToMany(mappedBy = "topico")
     var respostas: List<Resposta> = ArrayList()
+
+    constructor() {}
+    constructor(titulo: String?, mensagem: String?, curso: Curso?) {
+        this.titulo = titulo
+        this.mensagem = mensagem
+        this.curso = curso
+    }
 
     override fun hashCode(): Int {
         val prime = 31
@@ -41,5 +48,4 @@ class Topico(var titulo: String,
         } else if (id != other.id) return false
         return true
     }
-
 }
