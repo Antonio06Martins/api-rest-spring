@@ -28,6 +28,10 @@ dependencies {
 	//banco-dados
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("com.h2database:h2")
+
+	//cache
+	implementation("org.springframework.boot:spring-boot-starter-cache")
+
 }
 
 tasks.withType<KotlinCompile> {
