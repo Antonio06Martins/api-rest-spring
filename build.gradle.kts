@@ -32,6 +32,10 @@ dependencies {
 	//cache
 	implementation("org.springframework.boot:spring-boot-starter-cache")
 
+	//security
+	implementation("org.springframework.boot:spring-boot-starter-security")
+
+
 }
 
 tasks.withType<KotlinCompile> {

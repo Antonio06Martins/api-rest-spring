@@ -49,11 +49,9 @@ class TopicosController {
 
         return if (nomeCurso == null){
             val topicos = topicoRepository!!.findAll(paginacao)
-            println(nomeCurso)
             TopicoDto.converter(topicos)
         } else {
             val topicos = topicoRepository!!.findByCursoNome(nomeCurso, paginacao)
-            println(nomeCurso)
             TopicoDto.converter(topicos)
         }
     }

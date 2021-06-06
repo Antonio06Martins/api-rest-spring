@@ -1,13 +1,12 @@
 package com.antonio.apirest.modelo
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
+import javax.persistence.*
+
 
 @Entity
-class Usuario {
-
+class Usuario : UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
@@ -15,6 +14,8 @@ class Usuario {
     var email: String? = null
     var senha: String? = null
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private val perfis: List<Perfil?> = ArrayList()
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
@@ -22,14 +23,46 @@ class Usuario {
         return result
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null) return false
-        if (javaClass != other.javaClass) return false
-        val other = other as Usuario
+    override fun equals(obj: Any?): Boolean {
+        if (this === obj) return true
+        if (obj == null) return false
+        if (javaClass != obj.javaClass) return false
+        val other = obj as Usuario
         if (id == null) {
             if (other.id != null) return false
         } else if (id != other.id) return false
         return true
+    }
+
+    override fun getAuthorities(): Collection<GrantedAuthority?> {
+        return perfis
+    }
+
+    override fun getPassword(): String {
+        return senha!!
+    }
+
+    override fun getUsername(): String {
+        return email!!
+    }
+
+    override fun isAccountNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isAccountNonLocked(): Boolean {
+        return true
+    }
+
+    override fun isCredentialsNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isEnabled(): Boolean {
+        return true
+    }
+
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }
