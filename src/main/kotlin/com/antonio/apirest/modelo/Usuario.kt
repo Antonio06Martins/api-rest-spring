@@ -62,10 +62,6 @@ class Usuario : UserDetails {
         return true
     }
 
-    fun getId() {
-
-    }
-
     companion object {
         private const val serialVersionUID = 1L
     }
