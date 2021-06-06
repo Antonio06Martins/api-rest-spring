@@ -35,6 +35,10 @@ dependencies {
 	//security
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
+	//token
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+
+
 
 }
 
