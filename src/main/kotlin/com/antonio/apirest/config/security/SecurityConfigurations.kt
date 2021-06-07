@@ -48,6 +48,7 @@ class SecurityConfigurations : WebSecurityConfigurerAdapter() {
             .antMatchers(HttpMethod.GET, "/topicos").permitAll()
             .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
             .antMatchers(HttpMethod.POST, "/auth").permitAll()
+            .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             .anyRequest().authenticated()
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -58,7 +59,10 @@ class SecurityConfigurations : WebSecurityConfigurerAdapter() {
     }
 
     //Configuracoes de recursos estaticos(js, css, imagens, etc.)
-    @Throws(Exception::class)
+    @Throws(java.lang.Exception::class)
     override fun configure(web: WebSecurity) {
+        web.ignoring()
+            .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**")
     }
+
 }
