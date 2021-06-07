@@ -35,7 +35,16 @@ dependencies {
 	//security
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
+	//token
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
 
+	//monitoramento
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("de.codecentric:spring-boot-admin-starter-client:2.4.1")
+
+	//documentação swagger
+	implementation("io.springfox:springfox-swagger2:2.9.2")
+	implementation("io.springfox:springfox-swagger-ui:2.9.2")
 }
 
 tasks.withType<KotlinCompile> {
