@@ -1,8 +1,8 @@
 package com.antonio.apirest.controller.dto
 
 import com.antonio.apirest.modelo.Topico
+import org.springframework.data.domain.Page
 import java.time.LocalDateTime
-import java.util.stream.Collectors
 
 
 class TopicoDto(topico: Topico) {
@@ -12,12 +12,8 @@ class TopicoDto(topico: Topico) {
     val dataCriacao: LocalDateTime
 
     companion object {
-        fun converter(topicos: List<Topico?>): List<TopicoDto> {
-            return topicos.stream().map { topico: Topico? ->
-                TopicoDto(
-                    topico!!
-                )
-            }.collect(Collectors.toList())
+        fun converter(topicos: Page<Topico?>): Page<TopicoDto>? {
+            return topicos.map { topico: Topico? -> TopicoDto(topico!!) }
         }
     }
 
@@ -28,4 +24,6 @@ class TopicoDto(topico: Topico) {
         dataCriacao = topico.dataCriacao
     }
 }
+
+
 

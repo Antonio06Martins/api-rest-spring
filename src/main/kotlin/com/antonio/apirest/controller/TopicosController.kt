@@ -8,6 +8,13 @@ import com.antonio.apirest.modelo.Topico
 import com.antonio.apirest.repository.CursoRepository
 import com.antonio.apirest.repository.TopicoRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
@@ -27,20 +34,31 @@ class TopicosController {
     private val cursoRepository: CursoRepository? = null
 
     @GetMapping
-    fun lista(nomeCurso: String?): List<TopicoDto?>? {
+    @Cacheable(value = ["listaDeTopicos"])
+    fun lista(@RequestParam(required = false) nomeCurso: String?,
+        //retirando o comentario temos a opção de passar em portugues e os paramentros que queremos
+              //@RequestParam pagina: Int, //page
+              //@RequestParam qtd: Int, //size
+              //@RequestParam ordenacao: String //sort
+
+              // Para utilizar a paginação automatica temos que anotar nosso application com @EnableSpringDataWebSupport
+              // Beneficios muito mais flexibilidade nas ordenações podemos pedir para ordenar por mais de um elemento do nosso objeto
+              @PageableDefault(sort = ["id"], direction = Sort.Direction.DESC, page = 0, size = 10)paginacao: Pageable): Page<TopicoDto>? {
+
+        //val paginacao: Pageable = PageRequest.of(pagina, qtd, Sort.Direction.DESC, ordenacao)
+
         return if (nomeCurso == null){
-            val topicos = topicoRepository!!.findAll()
-            println(nomeCurso)
+            val topicos = topicoRepository!!.findAll(paginacao)
             TopicoDto.converter(topicos)
         } else {
-            val topicos = topicoRepository!!.findByCursoNome(nomeCurso)
-            println(nomeCurso)
+            val topicos = topicoRepository!!.findByCursoNome(nomeCurso, paginacao)
             TopicoDto.converter(topicos)
         }
     }
 
     @PostMapping
     @Transactional
+    @CacheEvict(value = ["listaDeTopicos"], allEntries = true)
     fun cadastrar(@RequestBody @Valid form: TopicoForm, uriBuilder: UriComponentsBuilder): ResponseEntity<TopicoDto?>? {
         val topico = form.converter(cursoRepository!!)
         topicoRepository!!.save(topico)
@@ -58,6 +76,7 @@ class TopicosController {
 
     @PutMapping("/{id}")
     @Transactional
+    @CacheEvict(value = ["listaDeTopicos"], allEntries = true)
     fun atualizar(
         @PathVariable id: Long?,
         @RequestBody form: @Valid AtualizacaoTopicoForm?
@@ -72,6 +91,7 @@ class TopicosController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @CacheEvict(value = ["listaDeTopicos"], allEntries = true)
     fun remover(@PathVariable id: Long?): ResponseEntity<*>? {
         val optional: Optional<Topico?> = topicoRepository!!.findById(id!!)
         if (optional.isPresent()) {
