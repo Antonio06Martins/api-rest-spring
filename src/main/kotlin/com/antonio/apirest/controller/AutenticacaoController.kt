@@ -17,7 +17,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/auth")
-@Profile("prod")
+@Profile("prod", "test")
 class AutenticacaoController {
     @Autowired
     private val authManager: AuthenticationManager? = null

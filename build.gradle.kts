@@ -45,6 +45,13 @@ dependencies {
 	//documentação swagger
 	implementation("io.springfox:springfox-swagger2:2.9.2")
 	implementation("io.springfox:springfox-swagger-ui:2.9.2")
+
+	//test
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+	testCompileOnly("junit:junit:4.13")
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
+
 }
 
 tasks.withType<KotlinCompile> {
