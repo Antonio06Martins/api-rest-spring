@@ -29,5 +29,4 @@ class Curso(var nome: String, var categoria: String) {
         } else if (id != other.id) return false
         return true
     }
-
 }

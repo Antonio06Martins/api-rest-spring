@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.antonio"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1-forum"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
