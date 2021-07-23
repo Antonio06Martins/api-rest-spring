@@ -127,3 +127,13 @@ Por padrão, os testes automatizados dos repositories utilizam um banco de dados
 É possível forçar um profile específico para os testes automatizados com a utilização da anotação @ActiveProfiles.
 Para conseguir injetar o MockMvc devemos anotar a classe de teste com @AutoConfigureMockMvc.
 
+É possível utilizar o Docker para criação de imagens e de containers para aplicações que utilizam Java com Spring Boot.
+Devemos criar um arquivo Dockerfile no diretório raiz da aplicação, para ensinar ao Docker como deve ser gerada a imagem dela.
+É possível passar as variáveis de ambiente utilizadas pela aplicação para o container Docker.
+É possível realizar o deploy de aplicações Java com Spring Boot em ambientes Cloud, como o Heroku.
+Cada provedor Cloud pode exigir diferentes configurações adicionais a serem realizadas na aplicação, para que ela seja executada sem nenhum tipo de problema.
+
+docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE='prod' -e FORUM_DATABASE_URL='jdbc:h2:mem:alura-forum' -e FORUM_DATABASE_USERNAME='sa' -e FORUM_DATABASE_PASSWORD='' -e FORUM_JWT
+_SECRET='123456' alura/forum
+
+
